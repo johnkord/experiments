@@ -11,6 +11,7 @@ mod memory;
 mod process;
 mod capability;
 mod io;
+mod examples;
 
 use core::panic::PanicInfo;
 
@@ -35,6 +36,9 @@ pub extern "C" fn _start() -> ! {
     io::init();
     
     println!("RustOS Kernel Initialized Successfully");
+    
+    // Demonstrate capability system usage
+    examples::demonstrate_capability_advantages();
     
     // Start the main kernel loop
     kernel_main();
