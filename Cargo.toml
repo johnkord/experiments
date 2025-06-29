@@ -1,0 +1,40 @@
+[package]
+name = "rustos-kernel"
+version = "0.1.0"
+edition = "2021"
+authors = ["RustOS Team"]
+description = "A hypervisor-native operating system written entirely in Rust"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/johnkord/experiments"
+
+[dependencies]
+# Core dependencies
+linked_list_allocator = "0.10"
+x86_64 = "0.14"
+futures = { version = "0.3", default-features = false, features = ["alloc"] }
+
+# Async runtime
+async-trait = "0.1"
+
+# Serialization
+serde = { version = "1.0", default-features = false, features = ["derive", "alloc"] }
+
+# Optional hypervisor interfaces (commented out for initial implementation)
+# kvm-bindings = "0.6"
+# xen-bindings = "0.2"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[profile.kernel]
+inherits = "release"
+panic = "abort"
+lto = true
+codegen-units = 1
+
+[[bin]]
+name = "rustos-kernel"
+path = "src/main.rs"
